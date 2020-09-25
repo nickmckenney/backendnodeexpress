@@ -3,7 +3,7 @@ let port = process.env.PORT || 4001;
 const bodyParser = require('body-parser');
 const cors = require('cors');
 
-const sendGrid = require('@sendGrid/mail');
+// const sendGrid = require('@sendGrid/mail');
 
 
 const app = express();
@@ -23,7 +23,7 @@ app.use((req, res, next) => {
 app.get("/",(req,res)=>{
     res.send("hi");
 });
-app.get('/api', (req, res, next) => {
+app.get('/api', (req, res) => {
     res.send('API is Working!')
 });
 
