@@ -3,7 +3,7 @@ let port = process.env.PORT || 4001;
 const bodyParser = require('body-parser');
 const cors = require('cors');
 
-// const sendGrid = require('@sendGrid/mail');
+const sendGrid = require('@sendGrid/mail');
 
 
 const app = express();
@@ -28,35 +28,35 @@ app.get('/api', (req, res) => {
 });
 
 
-// app.post('/api/email', (req, res, next) => {
+app.post('/api/email', (req, res, next) => {
 
-//     console.log(req.body);
+    console.log(req.body);
 
-//     sendGrid.setApiKey('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');
-//     const msg = {
-//         to: 'mckenney2001@gmail.com',
-//         from: 'mckenney2001@gmail.com',//SendGrid only allows to send emails to yourself
-//         subject: req.body.email,
-//         text: req.body.message
-//     }
+    sendGrid.setApiKey('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');
+    const msg = {
+        to: 'mckenney2001@gmail.com',
+        from: 'mckenney2001@gmail.com',//SendGrid only allows to send emails to yourself
+        subject: req.body.email,
+        text: req.body.message
+    }
 
-//     sendGrid.send(msg)
-//         .then(result => {
+    sendGrid.send(msg)
+        .then(result => {
 
-//             res.status(200).json({
-//                 success: true
-//             });
+            res.status(200).json({
+                success: true
+            });
 
-//         })
-//         .catch(err => {
+        })
+        .catch(err => {
 
-//             console.log('error: ', err);
-//             res.status(401).json({
-//                 success: false
-//             });
+            console.log('error: ', err);
+            res.status(401).json({
+                success: false
+            });
 
-//         });
-// });
+        });
+});
 
 
 
