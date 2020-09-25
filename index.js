@@ -3,7 +3,6 @@ let port = process.env.PORT || 4001;
 const bodyParser = require('body-parser');
 const cors = require('cors');
 
-// const sendGrid = require('@sendGrid/mail');
 
 
 const app = express();
@@ -12,52 +11,37 @@ const app = express();
 app.use(bodyParser.json());
 
 app.use(cors());
-
-// app.use((req, res) => {
-//     res.setHeader('Access-Control-Allow-Origin', '*'); // Change later to only allow our server
-//     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE');
-//     res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-//     next();
-// });
-
-// app.get("/",(req,res)=>{
-//     res.send("hi");
-// });
-// app.get('/api', (req, res) => {
-//     res.send('API is Working!')
-// });
-
-
-// app.post('/api/email', (req, res) => {
-
-//     console.log(req.body);
-
-//     sendGrid.setApiKey('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');
-//     const msg = {
-//         to: 'mckenney2001@gmail.com',
-//         from: 'mckenney2001@gmail.com',//SendGrid only allows to send emails to yourself
-//         subject: req.body.email,
-//         text: req.body.message
-//     }
-
-//     sendGrid.send(msg)
-//         .then(result => {
-
-//             res.status(200).json({
-//                 success: true
-//             });
-
-//         })
-//         .catch(err => {
-
-//             console.log('error: ', err);
-//             res.status(401).json({
-//                 success: false
-//             });
-
-//         });
-// });
-
+const mailjet = require ('node-mailjet')
+.connect('c10a1e15ead624af9628a7d1aff8b960', '9a8dbcc843fe2d2d51c87b6ded5bbdb7')
+const request = mailjet
+.post("send", {'version': 'v3.1'})
+.request({
+  "Messages":[
+    {
+      "From": {
+        "Email": "mckenney2001@gmail.com",
+        "Name": "Nicholaus"
+      },
+      "To": [
+        {
+          "Email": "mckenney2001@gmail.com",
+          "Name": "Nicholaus"
+        }
+      ],
+      "Subject": "Greetings from Mailjet.",
+      "TextPart": "My first Mailjet email",
+      "HTMLPart": "<h3>Dear passenger 1, welcome to <a href='https://www.mailjet.com/'>Mailjet</a>!</h3><br />May the delivery force be with you!",
+      "CustomID": "AppGettingStartedTest"
+    }
+  ]
+})
+request
+  .then((result) => {
+    console.log(result.body)
+  })
+  .catch((err) => {
+    console.log(err.statusCode)
+  })
 
 
 app.listen(port, ()=>{
