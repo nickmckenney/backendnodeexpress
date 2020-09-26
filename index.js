@@ -21,7 +21,7 @@ const request = mailjet
   "Messages":[
     {
       "From": {
-        "Email": req.body.email,
+        "Email": "mckenney2001@gmail.com",
         "Name": req.body.name
       },
       "To": [
@@ -30,7 +30,7 @@ const request = mailjet
           "Name": "Nicholaus"
         }
       ],
-      "Subject": "Greetings from Mailjet.",
+      "Subject": req.body.email,
       "TextPart": req.body.message,
       "HTMLPart": req.body.message,
       "CustomID": "AppGettingStartedTest"
